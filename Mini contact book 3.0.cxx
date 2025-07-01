@@ -1,140 +1,197 @@
 #include <iostream>
 #include <string>
 
+// Dynamic arrays to store contact names and numbers
 std::string* addName;
 std::string* addNumber;
 int maxContactCount;
-int currentContactCount = 0;
+int currentContactCount;
 
+// Function declarations
 void addEntry();
 void deleteEntry();
 void editEntry();
 void searchEntry();
-void show();
+void showEntry();
 void mainFun();
 
-int main(){
-    char op;
+// Welcome ASCII art
+void welcomeAscci(){
+    std::cout << "/\\_/\\ \n";
+    std::cout << "(@ . ^) \n";
+    std::cout << " > ^ <  \n";
+    std::cout << " /    \\  \n";
+    std::cout << "/(\")(\") \n";
+    std::cout << "||=======|| \n";
+    std::cout << "||Welcome|| \n";
+    std::cout << "||=======|| \n";
+}
 
-    std::cout << " how many Contacts do you wanna add? " <<std::endl;
+// Goodbye ASCII art
+void byeascci(){
+    std::cout << "/\\_/\\ \n";
+    std::cout << "(｡•́︿•̀｡) \n";
+    std::cout << " > ^ <  \n";
+    std::cout << " /    \\  \n";
+    std::cout << "/(\")(\") \n";
+    std::cout << "||=======|| \n";
+    std::cout << "||ByeBye || \n";
+    std::cout << "||=======|| \n";
+}
+
+int main(){
+    std::cout << " Dynamic Mini Contact Book 3.0 \n ";
+    welcomeAscci();
+
+    char ope;
+
+    // Ask user how many contacts they want to store
+    std::cout << " How many Contact do you wanna add? \n";
     std::cin >> maxContactCount;
 
+    // Allocate memory dynamically for contacts
     addName = new std::string[maxContactCount];
     addNumber = new std::string[maxContactCount];
 
+    // Main loop
     while(true){
+        std::cout << "/~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~/ \n";
         mainFun();
 
-        std::cout << " Wanna keep going? [Y/N || y/n] \n ";
-        std::cin >> op;
-        if(op == 'Y' || op == 'y'){
-        }else if(op =='N' || op == 'n'){
+        // Ask user if they want to continue
+        std::cout << " Wanna keep foing [Y/N || y/n] : \n ";
+        std::cin >> ope;
+        if(ope == 'N' || ope == 'n'){
+            byeascci();
             break;
         }
+        std::cout << "/~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~@~/ \n";
     }
 
-    delete [] addName;
-    delete [] addNumber;
+    // Free up the allocated memory
+    delete[] addName;
+    delete[] addNumber;
+
     return 0;
 }
 
-void addEntry(std::string* newName,std::string* newNumber,int &countt, int max){
+// Function to add a contact
+void addEntry(std::string* newName,std::string* newNumber,int &countt,int max){
     if(countt >= max){
-        std::cout << " Contact list full!! \n ";
+        std::cout << " Contact list is full \n";
         return;
     }
-    std::cout << " Add Contact  " <<std::endl;
+    std::cout << "|>^_^_^_^_^_^_^_^_^_^_^_^_^_^_^_^<| \n " ;
+    std::cout << " Add Contacts " <<std::endl;
     std::cout << " Enter Name : \n ";
     std::getline(std::cin >> std::ws,newName[countt]);
     std::cout << " Enter Number : \n ";
     std::getline(std::cin >> std::ws,newNumber[countt]);
     countt++;
+    std::cout << "|>^_^_^_^_^_^_^_^_^_^_^_^_^_^_^_^<| \n " ;
 }
 
+// Function to delete a contact by index
 void deleteEntry(std::string* deleteName,std::string* deleteNumber,int &countt,int index){
     if(index < 0 || index >= countt){
-        std::cout << " Invalid input \n ";
+        std::cout << " Invalid index input \n ";
         return;
     }else{
-        for(int u = 0;u < countt-1;u++){
-             deleteName[u] = deleteName[u+1];
-             deleteNumber[u] = deleteNumber[u + 1];
+        std::cout << ")>_*>_*>_*>_*>_*>_*>_*>_*>_*>_*>_*>_*>_*( \n ";
+        for(int o = index;o < countt-1;o++){
+            deleteName[o] = deleteName[o + 1];
+            deleteNumber[o] = deleteNumber[o + 1];
         }
         countt--;
-        std::cout << " Deleted!! \n ";
+        std::cout << " Deleted! \n ";
+        std::cout << ")>_*>_*>_*>_*>_*>_*>_*>_*>_*>_*>_*>_*>_*( \n ";
     }
 }
 
+// Function to edit a contact by index
 void editEntry(std::string* editName,std::string* editNumber,int &countt,int index){
     if(index < 0 || index >= countt){
-        std::cout << " Invalid input \n" ;
+        std::cout << " Invalid index input \n ";
         return;
-    }else{
+    }else {
+        std::cout << "@_@_@_@_@_@_@_@_@_@_@_@_@_@_@_@_@_@_@_@_@_@_@ \n " ;
         std::cout << " Updating " <<std::endl;
-        std::cout << " Enter name : \n ";
+        std::cout << " Edit Name : \n ";
         std::getline(std::cin >> std::ws,editName[index]);
-        std::cout << " Enter Number : \n ";
+        std::cout << " Edit Number : \n ";
         std::getline(std::cin >> std::ws,editNumber[index]);
         std::cout << " Updated!! \n ";
+        std::cout << "@_@_@_@_@_@_@_@_@_@_@_@_@_@_@_@_@_@_@_@_@_@_@ \n " ;
     }
 }
 
+// Function to search contact by name
 void searchEntry(std::string* searchName,std::string* searchNumber,int countt,std::string &query){
     bool foundIT = false;
+    std::cout << "|~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~| \n ";
     for(int q = 0;q < countt;q++){
         if(searchName[q].find(query) != std::string::npos){
-            std::cout << " Fount it " <<std::endl;
+            std::cout << " Found it " <<std::endl;
             std::cout << " Name : " << searchName[q] << " || " << " Number : " << searchNumber[q] <<std::endl;
             foundIT = true;
         }
-        if(!foundIT){
-            std::cout << " Couldn't find anything related to " << query <<std::endl;
-        }
     }
+    if(!foundIT){
+        std::cout << " We couldn't find anything related to " << query <<std::endl;
+    }
+    std::cout << "|~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~%~| \n ";
 }
 
-void show(std::string* showName,std::string* showNumber,int &countt){
-    std::cout << " Contact list \n ";
-    for(int o = 0;o < countt;o++){
-        std::cout << (o + 1) << " Name : " << showName[o] << " || " << " Number : " << showNumber[o] <<std::endl;
+// Function to display all contacts
+void showEntry(std::string* showName,std::string* showNumber,int &countt){
+    std::cout << "=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_= \n";
+    std::cout << " Contact list " <<std::endl;
+    for(int k = 0;k < countt;k++){
+        std::cout << (k + 1) << " Name : " << showName[k] << " || " << " Number : " << showNumber[k] <<std::endl;
     }
+    std::cout << "=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_= \n";
 }
 
+// Handles main menu interactions
 void mainFun(){
     char op;
 
-    std::cout << "Add Contact[A] \nDelete Contact[D] \nEdit Contact[E] \nView Contact[V] \nSearch Contact[S] " <<std::endl;
+    std::cout << "Add Contact[A] \nDelete Contact[D] \nEdit Contact[E] \nSearchContact by name[S] \nView Contact[V] " <<std::endl;
     std::cin >> op;
 
     switch (op) {
-        case 'A':
+        case 'A':{
             addEntry(addName,addNumber,currentContactCount,maxContactCount);
         break;
-        case 'D':
+        }
+        case 'D':{
             std::cout << " Deleting " <<std::endl;
-            int delete1;
-            std::cout << " What do you wanna delete? [enter the index] \n ";
-            std::cin >> delete1;
-            deleteEntry(addName,addNumber,currentContactCount,delete1 - 1);
+            int deletee;
+            std::cout << " what do you wanna delete [Enter the index] : \n ";
+            std::cin >> deletee;
+            deleteEntry(addName,addNumber,currentContactCount,deletee - 1);
         break;
-        case 'E':
+        }
+        case 'E':{
             int update;
-            std::cout << " What do you wanna update? [enter the index] \n ";
+            std::cout << " What do you wanna edit [Enter the index] : \n ";
             std::cin >> update;
             editEntry(addName,addNumber,currentContactCount,update - 1);
         break;
-        case 'V':
-            show(addName,addNumber,currentContactCount);
-        break;
+        }
         case 'S':{
-            std::cout << " Searching " <<std::endl;
+            std::cout << " Searching \n ";
             std::string searchNewName;
-            std::cout << " Enter name to search ? " <<std::endl;
+            std::cout << " Enter the name you wanna search : \n ";
             std::getline(std::cin >> std::ws,searchNewName);
             searchEntry(addName,addNumber,currentContactCount,searchNewName);
-            break;
+        break;
         }
-            default:
-                std::cout << " Invalid input try again \n ";
+        case 'V':{
+            showEntry(addName,addNumber,currentContactCount);
+        break;
+        }
+        default:
+            std::cout << " Invalid input please try again " <<std::endl;
     }
 }
