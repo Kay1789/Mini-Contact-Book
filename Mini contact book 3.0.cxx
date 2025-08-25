@@ -173,7 +173,7 @@ auto searchEntry(std::string* searchName,std::string* searchEmail,std::string* s
     bool fountIT = false;
 
     std::cout << Cyan << "What do you wanna search? " << Remove;
-    std::cin >> std::ws >> Query;
+    std::getline(std::cin >> std::ws,Query);
 
     for(int q = 0; q < searchCount; q++){
         if(searchName[q].find(Query) != std::string::npos || 
